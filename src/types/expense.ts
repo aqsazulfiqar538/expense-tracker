@@ -7,4 +7,11 @@ export type Expense = {
     end_date: string | null;
     notes: string | null;
   };
+  relationships: {
+    category?: {
+      data?: {
+        id: string;
+      };
+    };
+  };
 };
