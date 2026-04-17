@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { signupUser } from "@/lib/api/auth";
+import { useAuth } from "@/context/AuthContext";
 import type { SignupPayload } from "@/types/auth";
 import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const router = useRouter();
+  const { signup, loading, error } = useAuth();
 
   const [form, setForm] = useState<SignupPayload>({
     email: "",
@@ -18,12 +19,7 @@ export default function SignupForm() {
     date_of_birth: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = ( e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setForm((prev) => ({
@@ -34,20 +30,11 @@ export default function SignupForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
 
     try {
-      await signupUser(form);
+      await signup(form);
       router.push("/");
-    } catch (err: any) {
-      const message =
-        err?.response?.data?.errors?.join(", ") ||
-        "Signup failed. Please try again.";
-
-      setError(message);
-    } finally {
-      setLoading(false);
+    } catch {
     }
   };
 
@@ -103,7 +90,7 @@ export default function SignupForm() {
         <input
           type="password"
           name="password_confirmation"
-          placeholder="Confirm Password"
+          placeholder="Password Confirmation"
           value={form.password_confirmation}
           onChange={handleChange}
           className="w-full border p-2 rounded"
@@ -113,7 +100,7 @@ export default function SignupForm() {
         <input
           type="text"
           name="phone_number"
-          placeholder="Phone Number (optional)"
+          placeholder="Phone Number"
           value={form.phone_number}
           onChange={handleChange}
           className="w-full border p-2 rounded"
@@ -130,7 +117,7 @@ export default function SignupForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white p-2 rounded disabled:opacity-50"
+          className="w-full bg-blue-600 text-white p-2 rounded"
         >
           {loading ? "Signing up..." : "Sign Up"}
         </button>

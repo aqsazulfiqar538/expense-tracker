@@ -1,20 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { loginUser } from "@/lib/api/auth";
+import { useAuth } from "@/context/AuthContext";
 import type { LoginPayload } from "@/types/auth";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const router = useRouter();
+  const { login, loading, error } = useAuth();
 
   const [form, setForm] = useState<LoginPayload>({
     email: "",
     password: "",
   });
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,21 +25,11 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
 
     try {
-      await loginUser(form);
+      await login(form);
       router.push("/");
-    } catch (err: any) {
-      const message =
-        err?.response?.data?.error ||
-        err?.response?.data?.errors?.join(", ") ||
-        "Login failed. Please try again.";
-
-      setError(message);
-    } finally {
-      setLoading(false);
+    } catch {
     }
   };
 
@@ -77,7 +65,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-green-600 text-white p-2 rounded disabled:opacity-50"
+          className="w-full bg-green-600 text-white p-2 rounded"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
