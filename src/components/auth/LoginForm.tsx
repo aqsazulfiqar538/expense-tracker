@@ -32,7 +32,7 @@ export default function LoginForm() {
 
     try {
       await loginUser(form);
-      router.push("/dashboard");
+      router.push("/");
     } catch (err: any) {
       const message =
         err?.response?.data?.error ||

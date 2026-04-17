@@ -39,7 +39,7 @@ export default function SignupForm() {
 
     try {
       await signupUser(form);
-      router.push("/dashboard");
+      router.push("/");
     } catch (err: any) {
       const message =
         err?.response?.data?.errors?.join(", ") ||
