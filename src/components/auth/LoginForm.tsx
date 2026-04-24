@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import type { LoginPayload } from "@/types/auth";
 import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
+export function LoginForm() {
   const router = useRouter();
   const { login, loading, error } = useAuth();
 
