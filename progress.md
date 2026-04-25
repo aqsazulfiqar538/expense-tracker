@@ -55,12 +55,13 @@ in the same chat session as the work; don't batch.
 ## Phase 3 — Expenses + Categories
 
 Categories first (expenses depend on them):
-- [ ] `src/lib/api/categories.ts` — listCategories, createCategory (supports `parent_id`)
-- [ ] `src/types/category.ts`
-- [ ] `src/components/category/CategorySelect.tsx` — dropdown of system + own + "Create your own…" option
-- [ ] `src/components/category/CategoryCreateModal.tsx` — name input + optional parent select (subcategory of any system or own category)
-- [ ] `src/components/category/CategoryTree.tsx` — read-only nested view for the management page
-- [ ] `src/app/categories/page.tsx` — manage page (list + create)
+- [x] `src/lib/api/categories.ts` — listCategories, createCategory (supports `parent_id`)
+- [x] `src/types/category.ts`
+- [x] `src/components/category/CategorySelect.tsx` — dropdown of system + own + "Create your own…" option
+- [x] `src/components/category/CategoryCreateModal.tsx` — name input + optional parent select (subcategory of any system or own category)
+- [x] `src/components/category/CategoryTree.tsx` — read-only nested view for the management page
+- [x] `src/app/categories/page.tsx` — manage page (list + create)
+- [x] `src/components/ui/Modal.tsx` — reusable modal primitive (added in Phase 3 since it's used by CategoryCreateModal)
 
 Expenses:
 - [ ] `src/lib/api/expenses.ts` — list, get, create, update, delete (with category/date filters)
@@ -77,10 +78,10 @@ Expenses:
 - [ ] `src/app/expenses/page.tsx`
 - [ ] `src/app/expenses/new/page.tsx`
 - [ ] `src/app/expenses/[id]/page.tsx`
-- [ ] Manual: create individual expense
+- [ ] Manual: create individual expense → land on its detail page (`/expenses/:id`), not the list
 - [ ] Manual: create + browse a system subcategory and a fully custom category, use both on a new expense
-- [ ] Manual: equal split creates correct repayments
-- [ ] Manual: custom split refuses submit when shares don't sum, accepts when they do
+- [ ] Manual: equal split creates correct repayments (deferred to Phase 4 — needs friends list)
+- [ ] Manual: custom split refuses submit when shares don't sum, accepts when they do (deferred to Phase 4)
 - [ ] Manual: edit + soft-delete own expense; edit/delete someone else's surfaces the 403
 
 ## Phase 4 — Friends

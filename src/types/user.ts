@@ -1,6 +1,3 @@
-// Flat User shape — what components see after `lib/api/users.ts` unwraps the
-// JSON:API response. Field names match the Rails serializer exactly so the
-// unwrap step is a no-op cast.
 
 export type User = {
   id: string
@@ -11,11 +8,16 @@ export type User = {
   date_of_birth: string
 }
 
-// Light shape used in places like search results and friend lists, where
-// PII like email/phone shouldn't be exposed. Backend returns this shape via
-// PublicUserSerializer.
 export type PublicUser = {
   id: string
   first_name: string
   last_name: string
+}
+
+export type UserSummary = {
+  id: number
+  first_name: string
+  last_name: string
+  full_name: string
+  initials: string
 }
