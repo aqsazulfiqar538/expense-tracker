@@ -64,9 +64,9 @@ Categories first (expenses depend on them):
 - [x] `src/components/ui/Modal.tsx` — reusable modal primitive (added in Phase 3 since it's used by CategoryCreateModal)
 
 Expenses:
-- [ ] `src/lib/api/expenses.ts` — list, get, create, update, delete (with category/date filters)
-- [ ] `src/lib/api/comments.ts` — list, create, delete
-- [ ] `src/types/expense.ts`, `src/types/comment.ts`
+- [x] `src/lib/api/expenses.ts` — list, get, create, update, delete (with category/date filters)
+- [x] `src/lib/api/comments.ts` — list, create, delete
+- [x] `src/types/expense.ts`, `src/types/comment.ts`
 - [ ] `src/components/expense/ExpenseList.tsx`
 - [ ] `src/components/expense/ExpenseCard.tsx`
 - [ ] `src/components/expense/ExpenseForm.tsx` — used by both create and edit; integrates `CategorySelect`
