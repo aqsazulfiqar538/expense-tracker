@@ -7,22 +7,22 @@ in the same chat session as the work; don't batch.
 - [x] `progress.md` created at repo root
 - [x] `ARCHITECTURE.md` created at repo root
 - [x] `package.json` — remove `@tanstack/react-query`
-- [ ] `src/lib/storage.ts` — SSR-safe localStorage wrapper
-- [ ] `src/lib/apiClient.ts` — axios instance + auth interceptor + error normalizer + 401 handler
-- [ ] `src/lib/jsonapi.ts` — `unwrap` / `unwrapList`
-- [ ] `src/hooks/useApi.ts` — generic GET hook
-- [ ] `src/hooks/useMutation.ts` — generic write hook
-- [ ] `src/hooks/useAuth.ts` — re-export of `useContext(AuthContext)`
-- [ ] `src/types/api.ts` — `ApiError`, `Paginated<T>`
-- [ ] `src/components/ui/` — Button, Input, Select, Textarea, Card, Spinner, ErrorBanner, EmptyState
+- [x] `src/lib/storage.ts` — SSR-safe localStorage wrapper
+- [x] `src/lib/apiClient.ts` — axios instance + auth interceptor + error normalizer + 401 handler
+- [x] `src/lib/jsonapi.ts` — `unwrap` / `unwrapList`
+- [x] `src/hooks/useApi.ts` — generic GET hook
+- [x] `src/hooks/useMutation.ts` — generic write hook
+- [x] `src/hooks/useAuth.ts` — re-export of `useContext(AuthContext)`
+- [x] `src/types/api.ts` — `ApiError`, `Paginated<T>`
+- [x] `src/components/ui/` — Button, Input, Select, Textarea, Card, Spinner, ErrorBanner, EmptyState
 - [x] `src/app/layout.tsx` — drop dead imports
 - [x] `src/app/providers.tsx` — drop `QueryClientProvider`
 
 ## Phase 1 — Auth (completion)
-- [ ] `src/lib/api/auth.ts` — login, signup, logout, forgotPassword, resetPassword, confirmAccount, resendConfirmation
-- [ ] `src/lib/api/users.ts` — `getMe` (used by AuthContext bootstrap)
-- [ ] `src/types/user.ts`
-- [ ] `src/context/AuthContext.tsx` — rewritten; bootstraps user from `/users/me` if token exists
+- [x] `src/lib/api/auth.ts` — login, signup, logout, forgotPassword, resetPassword, confirmAccount, resendConfirmation
+- [x] `src/lib/api/users.ts` — `getProfile` (used by AuthContext bootstrap; backend route is `/users/profile`, not `/users/me`)
+- [x] `src/types/user.ts`
+- [x] `src/context/AuthContext.tsx` — rewritten; bootstraps user from `/users/profile` if token exists
 - [ ] `src/components/auth/LoginForm.tsx`
 - [ ] `src/components/auth/SignupForm.tsx`
 - [ ] `src/components/auth/ForgotPasswordForm.tsx`
