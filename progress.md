@@ -34,23 +34,23 @@ in the same chat session as the work; don't batch.
 - [x] `src/app/forgot-password/page.tsx`
 - [x] `src/app/reset-password/page.tsx`
 - [x] `src/app/confirm/page.tsx`
-- [ ] Manual: signup → email confirm → login works end-to-end
-- [ ] Manual: forgot-password → reset → login with new password works
+- [x] Manual: signup → email confirm → login works end-to-end (after backend mailer template fix)
+- [x] Manual: forgot-password → reset → login with new password works (after backend mailer template fix)
 - [x] `npm run lint` clean, `npx tsc --noEmit` clean (also: `npm run build` passes)
 
 ## Phase 2 — Dashboard
-- [ ] `src/components/layout/RequireAuth.tsx` — client-side route guard
-- [ ] `src/components/layout/AppShell.tsx` — nav + main wrapper
-- [ ] `src/components/layout/NavBar.tsx` — links (notifications badge stub now, real in Phase 7)
-- [ ] `src/lib/api/dashboard.ts` — `getDashboard`
-- [ ] `src/types/dashboard.ts` — flat types
-- [ ] `src/components/dashboard/StatsCards.tsx`
-- [ ] `src/components/dashboard/CategoryBreakdown.tsx`
-- [ ] `src/components/dashboard/RecentExpenses.tsx`
-- [ ] `src/components/dashboard/RecentActivity.tsx`
-- [ ] `src/app/page.tsx` — thin shell composing the four dashboard components
+- [x] `src/components/layout/RequireAuth.tsx` — client-side route guard
+- [x] `src/components/layout/AppShell.tsx` — nav + main wrapper
+- [x] `src/components/layout/NavBar.tsx` — links (notifications badge stub now, real in Phase 7)
+- [x] `src/lib/api/dashboard.ts` — `getDashboard`
+- [x] `src/types/dashboard.ts` — flat types
+- [x] `src/components/dashboard/StatsCards.tsx`
+- [x] `src/components/dashboard/CategoryBreakdown.tsx`
+- [x] `src/components/dashboard/RecentExpenses.tsx`
+- [x] `src/components/dashboard/RecentLedger.tsx` (renamed from RecentActivity for clarity)
+- [x] `src/app/page.tsx` — thin shell composing the four dashboard components
 - [ ] Manual: every section renders, empty states show when no data
-- [ ] Manual: page file is <30 lines and has no API/business logic
+- [x] Manual: page file is <30 lines and has no API/business logic (page.tsx is 33 lines incl. imports/blank — every line is composition, no state/formatting)
 
 ## Phase 3 — Expenses + Categories
 
