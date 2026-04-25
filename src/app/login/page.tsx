@@ -1,9 +1,10 @@
-import {LoginForm} from "@/components/auth/LoginForm"
+import { AuthCard } from "@/components/auth/AuthCard"
+import { LoginForm } from "@/components/auth/LoginForm"
 
 export default function LoginPage() {
   return (
-    <div>
+    <AuthCard title="Welcome back" subtitle="Log in to your account">
       <LoginForm />
-    </div>
+    </AuthCard>
   )
 }

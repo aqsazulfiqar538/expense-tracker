@@ -40,9 +40,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   out — wait."
   const [isBootstrapping, setIsBootstrapping] = useState(true)
 
+  // why this effect setStates directly:
+  //   "Bootstrap auth on mount" is one of the cases React docs explicitly
+  //   list as a legitimate useEffect use — loading data on the client that
+  //   wasn't available during render. The lint rule
+  //   `react-hooks/set-state-in-effect` is overzealous for this pattern; the
+  //   inline disable below is the audit trail.
   useEffect(() => {
     const token = getToken()
     if (!token) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsBootstrapping(false)
       return
     }

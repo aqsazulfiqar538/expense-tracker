@@ -1,9 +1,10 @@
-import SignupForm from "@/components/auth/SignupForm"
+import { AuthCard } from "@/components/auth/AuthCard"
+import { SignupForm } from "@/components/auth/SignupForm"
 
 export default function SignupPage() {
   return (
-    <div>
+    <AuthCard title="Create your account" subtitle="Track expenses with friends">
       <SignupForm />
-    </div>
+    </AuthCard>
   )
 }

@@ -23,20 +23,20 @@ in the same chat session as the work; don't batch.
 - [x] `src/lib/api/users.ts` — `getProfile` (used by AuthContext bootstrap; backend route is `/users/profile`, not `/users/me`)
 - [x] `src/types/user.ts`
 - [x] `src/context/AuthContext.tsx` — rewritten; bootstraps user from `/users/profile` if token exists
-- [ ] `src/components/auth/LoginForm.tsx`
-- [ ] `src/components/auth/SignupForm.tsx`
-- [ ] `src/components/auth/ForgotPasswordForm.tsx`
-- [ ] `src/components/auth/ResetPasswordForm.tsx`
-- [ ] `src/components/auth/ConfirmEmailNotice.tsx`
-- [ ] `src/components/auth/LogoutButton.tsx` (kept, minor cleanup)
-- [ ] `src/app/login/page.tsx` (thin shell)
-- [ ] `src/app/signup/page.tsx` (thin shell)
-- [ ] `src/app/forgot-password/page.tsx`
-- [ ] `src/app/reset-password/page.tsx`
-- [ ] `src/app/confirm/page.tsx`
+- [x] `src/components/auth/LoginForm.tsx`
+- [x] `src/components/auth/SignupForm.tsx`
+- [x] `src/components/auth/ForgotPasswordForm.tsx`
+- [x] `src/components/auth/ResetPasswordForm.tsx`
+- [x] `src/components/auth/ConfirmEmailNotice.tsx`
+- [x] `src/components/auth/LogoutButton.tsx`
+- [x] `src/app/login/page.tsx` (thin shell)
+- [x] `src/app/signup/page.tsx` (thin shell)
+- [x] `src/app/forgot-password/page.tsx`
+- [x] `src/app/reset-password/page.tsx`
+- [x] `src/app/confirm/page.tsx`
 - [ ] Manual: signup → email confirm → login works end-to-end
 - [ ] Manual: forgot-password → reset → login with new password works
-- [ ] `npm run lint` clean, `npx tsc --noEmit` clean
+- [x] `npm run lint` clean, `npx tsc --noEmit` clean (also: `npm run build` passes)
 
 ## Phase 2 — Dashboard
 - [ ] `src/components/layout/RequireAuth.tsx` — client-side route guard
