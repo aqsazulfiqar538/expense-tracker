@@ -67,17 +67,17 @@ Expenses:
 - [x] `src/lib/api/expenses.ts` — list, get, create, update, delete (with category/date filters)
 - [x] `src/lib/api/comments.ts` — list, create, delete
 - [x] `src/types/expense.ts`, `src/types/comment.ts`
-- [ ] `src/components/expense/ExpenseList.tsx`
-- [ ] `src/components/expense/ExpenseCard.tsx`
-- [ ] `src/components/expense/ExpenseForm.tsx` — used by both create and edit; integrates `CategorySelect`
-- [ ] `src/components/expense/SplitEditor.tsx` — equal vs custom; live total + diff; submit disabled when invalid
-- [ ] `src/components/expense/ParticipantPicker.tsx` — friends multi-select (accepts `friends` prop; until Phase 4 the consumer passes `[]`)
-- [ ] `src/components/expense/ExpenseDetail.tsx`
-- [ ] `src/components/expense/CommentList.tsx`
-- [ ] `src/components/expense/CommentForm.tsx`
-- [ ] `src/app/expenses/page.tsx`
-- [ ] `src/app/expenses/new/page.tsx`
-- [ ] `src/app/expenses/[id]/page.tsx`
+- [x] `src/components/expense/ExpenseList.tsx`
+- [x] `src/components/expense/ExpenseCard.tsx`
+- [x] `src/components/expense/ExpenseForm.tsx` — used by both create and edit; integrates `CategorySelect`
+- [x] `src/components/expense/SplitEditor.tsx` — equal vs custom; live total + diff; submit disabled when invalid
+- [x] `src/components/expense/ParticipantPicker.tsx` — friends multi-select (accepts `friends` prop; until Phase 4 the consumer passes `[]`)
+- [x] `src/components/expense/ExpenseDetail.tsx`
+- [x] `src/components/expense/CommentList.tsx`
+- [x] `src/components/expense/CommentForm.tsx`
+- [x] `src/app/expenses/page.tsx`
+- [x] `src/app/expenses/new/page.tsx`
+- [x] `src/app/expenses/[id]/page.tsx`
 - [ ] Manual: create individual expense → land on its detail page (`/expenses/:id`), not the list
 - [ ] Manual: create + browse a system subcategory and a fully custom category, use both on a new expense
 - [ ] Manual: equal split creates correct repayments (deferred to Phase 4 — needs friends list)
