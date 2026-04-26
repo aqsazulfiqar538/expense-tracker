@@ -4,13 +4,9 @@ import Link from "next/link"
 import { useAuth } from "@/hooks/useAuth"
 import { LogoutButton } from "@/components/auth/LogoutButton"
 
-// why a tuple array instead of mapping over an object:
-//   Order matters in a nav bar. An array preserves it; a plain object
-//   doesn't guarantee key order in TypeScript types.
 const navLinks: ReadonlyArray<{ href: string; label: string }> = [
   { href: "/", label: "Dashboard" },
   { href: "/expenses", label: "Expenses" },
-  { href: "/categories", label: "Categories" },
   { href: "/friends", label: "Friends" },
   { href: "/groups", label: "Groups" },
   { href: "/ledger", label: "Ledger" },

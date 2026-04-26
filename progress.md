@@ -59,9 +59,10 @@ Categories first (expenses depend on them):
 - [x] `src/types/category.ts`
 - [x] `src/components/category/CategorySelect.tsx` — dropdown of system + own + "Create your own…" option
 - [x] `src/components/category/CategoryCreateModal.tsx` — name input + optional parent select (subcategory of any system or own category)
-- [x] `src/components/category/CategoryTree.tsx` — read-only nested view for the management page
-- [x] `src/app/categories/page.tsx` — manage page (list + create)
+- [~] `src/components/category/CategoryTree.tsx` — REMOVED: standalone categories page dropped, dropdown is the single management point
+- [~] `src/app/categories/page.tsx` — REMOVED: redundant with the in-dropdown create flow
 - [x] `src/components/ui/Modal.tsx` — reusable modal primitive (added in Phase 3 since it's used by CategoryCreateModal)
+- [x] CategorySelect rewires `onCategoryCreated` callback so the dropdown refreshes after the modal creates a category
 
 Expenses:
 - [x] `src/lib/api/expenses.ts` — list, get, create, update, delete (with category/date filters)

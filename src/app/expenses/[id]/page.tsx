@@ -37,6 +37,7 @@ export default function ExpenseDetailPage({ params }: PageProps) {
               categories={categoriesQ.data}
               friends={[]}
               onChanged={() => expenseQ.refetch()}
+              onCategoryCreated={() => categoriesQ.refetch()}
             />
             <Card title="Comments">
               <div className="space-y-4">

@@ -18,9 +18,10 @@ type Props = {
   categories: Category[]
   friends: PickableFriend[]
   onChanged: () => void
+  onCategoryCreated?: () => void
 }
 
-export const ExpenseDetail = ({ expense, categories, friends, onChanged }: Props) => {
+export const ExpenseDetail = ({ expense, categories, friends, onChanged, onCategoryCreated }: Props) => {
   const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
   const [error, setError] = useState<ApiError | null>(null)
@@ -52,6 +53,7 @@ export const ExpenseDetail = ({ expense, categories, friends, onChanged }: Props
           categories={categories}
           friends={friends}
           onUpdated={() => { setIsEditing(false); onChanged() }}
+          onCategoryCreated={onCategoryCreated}
         />
       </Card>
     )

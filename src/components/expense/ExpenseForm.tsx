@@ -24,9 +24,10 @@ type Props = {
   categories: Category[]
   friends: PickableFriend[]
   onUpdated?: () => void
+  onCategoryCreated?: () => void
 }
 
-export const ExpenseForm = ({ mode, categories, friends, onUpdated }: Props) => {
+export const ExpenseForm = ({ mode, categories, friends, onUpdated, onCategoryCreated }: Props) => {
   const router = useRouter()
   const { user } = useAuth()
 
@@ -94,7 +95,7 @@ export const ExpenseForm = ({ mode, categories, friends, onUpdated }: Props) => 
 
       <Input label="Title" name="title" required value={title} onChange={(e) => setTitle(e.target.value)} />
       <Input label="Amount" name="amount" type="number" step="0.01" min="0.01" required value={amount} onChange={(e) => setAmount(e.target.value)} />
-      <CategorySelect categories={categories} value={categoryId} onChange={setCategoryId} />
+      <CategorySelect categories={categories} value={categoryId} onChange={setCategoryId} onCategoryCreated={onCategoryCreated} />
       <Input label="Date" name="start_date" type="date" required value={startDate} onChange={(e) => setStartDate(e.target.value)} />
       <Textarea label="Notes (optional)" name="notes" value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} />
 

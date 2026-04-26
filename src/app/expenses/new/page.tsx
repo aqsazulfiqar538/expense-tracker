@@ -10,7 +10,7 @@ import { useApi } from "@/hooks/useApi"
 import { listCategories } from "@/lib/api/categories"
 
 export default function NewExpensePage() {
-  const { data, isLoading, error } = useApi(listCategories, [])
+  const { data, isLoading, error, refetch } = useApi(listCategories, [])
 
   return (
     <RequireAuth>
@@ -18,7 +18,14 @@ export default function NewExpensePage() {
         <Card title="New expense">
           {isLoading && <Spinner />}
           {error && <ErrorBanner messages={error.messages} />}
-          {data && <ExpenseForm mode={{ kind: "create" }} categories={data} friends={[]} />}
+          {data && (
+            <ExpenseForm
+              mode={{ kind: "create" }}
+              categories={data}
+              friends={[]}
+              onCategoryCreated={refetch}
+            />
+          )}
         </Card>
       </AppShell>
     </RequireAuth>
