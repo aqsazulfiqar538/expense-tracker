@@ -98,17 +98,21 @@ Expenses:
 - [x] Retro: `ParticipantPicker` (built in Phase 3) now wired with real friends list on `ExpenseForm` (via `/expenses/new` page)
 
 ## Phase 5 — Groups
-- [ ] `src/lib/api/groups.ts`, `src/lib/api/members.ts`
-- [ ] `src/types/group.ts`
-- [ ] `src/components/group/GroupCard.tsx`
-- [ ] `src/components/group/GroupTypeSelect.tsx`
-- [ ] `src/components/group/GroupForm.tsx`
-- [ ] `src/components/group/GroupMemberList.tsx`
-- [ ] `src/app/groups/page.tsx`, `new/page.tsx`, `[id]/page.tsx`
+- [x] `src/lib/api/groups.ts`, `src/lib/api/members.ts`
+- [x] `src/types/group.ts`
+- [x] `src/components/group/GroupCard.tsx`
+- [x] `src/components/group/GroupTypeSelect.tsx`
+- [x] `src/components/group/GroupForm.tsx`
+- [x] `src/components/group/GroupMemberList.tsx`
+- [x] `src/components/group/GroupSelector.tsx` (retro: inline group create/pick in ExpenseForm)
+- [x] `src/app/groups/page.tsx`, `new/page.tsx`, `[id]/page.tsx`
+- [x] Retro: `ExpenseForm` now composes `GroupSelector` (None / Existing / Create new)
 - [ ] Manual: create group with friends as members
 - [ ] Manual: edit / delete as creator; non-creator gets 403
 - [ ] Manual: add + remove member; remove blocked when unsettled debts exist (backend message renders)
 - [ ] Manual: group detail reuses `ExpenseList` for the group's expenses
+- [ ] Manual: from `/expenses/new`, attach to existing group via dropdown
+- [ ] Manual: from `/expenses/new`, create a new group inline (with split friends becoming members)
 
 ## Phase 6 — Ledger
 - [ ] `src/lib/api/ledger.ts`, `src/lib/api/repayments.ts`

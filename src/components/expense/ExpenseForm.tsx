@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/Input"
 import { Textarea } from "@/components/ui/Textarea"
@@ -9,9 +9,11 @@ import { ErrorBanner } from "@/components/ui/ErrorBanner"
 import { CategorySelect } from "@/components/category/CategorySelect"
 import { ParticipantPicker, type PickableFriend } from "@/components/expense/ParticipantPicker"
 import { SplitEditor, isCustomSplitValid, type SplitMode, type CustomShare } from "@/components/expense/SplitEditor"
+import { GroupSelector, type GroupChoice } from "@/components/group/GroupSelector"
 import { createExpense, updateExpense } from "@/lib/api/expenses"
 import { useAuth } from "@/hooks/useAuth"
 import type { Category } from "@/types/category"
+import type { Group } from "@/types/group"
 import type { Expense, CreateExpenseInput, UpdateExpenseInput } from "@/types/expense"
 import type { ApiError } from "@/types/api"
 
@@ -23,11 +25,12 @@ type Props = {
   mode: Mode
   categories: Category[]
   friends: PickableFriend[]
+  groups: Group[]
   onUpdated?: () => void
   onCategoryCreated?: () => void
 }
 
-export const ExpenseForm = ({ mode, categories, friends, onUpdated, onCategoryCreated }: Props) => {
+export const ExpenseForm = ({ mode, categories, friends, groups, onUpdated, onCategoryCreated }: Props) => {
   const router = useRouter()
   const { user } = useAuth()
 
@@ -43,6 +46,7 @@ export const ExpenseForm = ({ mode, categories, friends, onUpdated, onCategoryCr
   const [selectedFriendIds, setSelectedFriendIds] = useState<number[]>([])
   const [splitMode, setSplitMode] = useState<SplitMode>("equal")
   const [customShares, setCustomShares] = useState<CustomShare[]>([])
+  const [groupChoice, setGroupChoice] = useState<GroupChoice>({ kind: "none" })
 
   const [error, setError] = useState<ApiError | null>(null)
   const [isPending, setIsPending] = useState(false)
@@ -51,9 +55,31 @@ export const ExpenseForm = ({ mode, categories, friends, onUpdated, onCategoryCr
     ? { id: Number(user.id), full_name: `${user.first_name} ${user.last_name}` }
     : null
 
+  const visibleFriends = useMemo<PickableFriend[]>(() => {
+    if (groupChoice.kind !== "existing") return friends
+    const group = groups.find((g) => Number(g.id) === groupChoice.group_id)
+    if (!group) return friends
+    const memberIds = new Set(group.users.map((u) => u.id))
+    return friends.filter((f) => memberIds.has(f.id))
+  }, [friends, groups, groupChoice])
+
   const splitParticipants: PickableFriend[] = me
-    ? [me, ...friends.filter((f) => selectedFriendIds.includes(f.id))]
+    ? [me, ...visibleFriends.filter((f) => selectedFriendIds.includes(f.id))]
     : []
+
+  const handleGroupChange = (choice: GroupChoice) => {
+    setGroupChoice(choice)
+    if (choice.kind === "existing") {
+      const group = groups.find((g) => Number(g.id) === choice.group_id)
+      if (group) {
+        const memberIds = new Set(group.users.map((u) => u.id))
+        setSelectedFriendIds((prev) => prev.filter((id) => memberIds.has(id)))
+        setCustomShares((prev) => prev.filter((row) =>
+          (me !== null && row.user_id === me.id) || memberIds.has(row.user_id),
+        ))
+      }
+    }
+  }
 
   const splitInvalid =
     shareWithFriends && splitMode === "custom" && !isCustomSplitValid(amount, customShares)
@@ -79,6 +105,11 @@ export const ExpenseForm = ({ mode, categories, friends, onUpdated, onCategoryCr
             ? splitParticipants.map((p) => ({ user_id: p.id }))
             : customShares
         }
+        if (groupChoice.kind === "existing" && groupChoice.group_id) {
+          payload.group_id = groupChoice.group_id
+        } else if (groupChoice.kind === "new" && groupChoice.name.trim()) {
+          payload.new_group = { name: groupChoice.name.trim(), group_type: groupChoice.group_type }
+        }
         const created = await createExpense(payload)
         router.push(`/expenses/${created.id}`)
       }
@@ -100,34 +131,38 @@ export const ExpenseForm = ({ mode, categories, friends, onUpdated, onCategoryCr
       <Textarea label="Notes (optional)" name="notes" value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} />
 
       {mode.kind === "create" && (
-        <div className="space-y-3 pt-2 border-t border-gray-100">
-          <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-            <input type="checkbox" checked={shareWithFriends} onChange={(e) => setShareWithFriends(e.target.checked)} className="accent-blue-600" />
-            Split this with friends
-          </label>
+        <>
+          <div className="space-y-3 pt-2 border-t border-gray-100">
+            <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+              <input type="checkbox" checked={shareWithFriends} onChange={(e) => setShareWithFriends(e.target.checked)} className="accent-blue-600" />
+              Split this with friends
+            </label>
 
-          {shareWithFriends && (
-            <>
-              <ParticipantPicker friends={friends} selectedIds={selectedFriendIds} onChange={(ids) => {
-                setSelectedFriendIds(ids)
-                setCustomShares([
-                  ...(me ? [{ user_id: me.id, paid_share: "0", owed_share: "0" }] : []),
-                  ...friends.filter((f) => ids.includes(f.id)).map((f) => ({ user_id: f.id, paid_share: "0", owed_share: "0" })),
-                ])
-              }} />
-              {splitParticipants.length > 1 && (
-                <SplitEditor
-                  amount={amount}
-                  participants={splitParticipants}
-                  mode={splitMode}
-                  onModeChange={setSplitMode}
-                  customShares={customShares}
-                  onCustomSharesChange={setCustomShares}
-                />
-              )}
-            </>
-          )}
-        </div>
+            {shareWithFriends && (
+              <>
+                <ParticipantPicker friends={visibleFriends} selectedIds={selectedFriendIds} onChange={(ids) => {
+                  setSelectedFriendIds(ids)
+                  setCustomShares([
+                    ...(me ? [{ user_id: me.id, paid_share: "0", owed_share: "0" }] : []),
+                    ...visibleFriends.filter((f) => ids.includes(f.id)).map((f) => ({ user_id: f.id, paid_share: "0", owed_share: "0" })),
+                  ])
+                }} />
+                {splitParticipants.length > 1 && (
+                  <SplitEditor
+                    amount={amount}
+                    participants={splitParticipants}
+                    mode={splitMode}
+                    onModeChange={setSplitMode}
+                    customShares={customShares}
+                    onCustomSharesChange={setCustomShares}
+                  />
+                )}
+              </>
+            )}
+          </div>
+
+          <GroupSelector groups={groups} value={groupChoice} onChange={handleGroupChange} />
+        </>
       )}
 
       <Button type="submit" disabled={isPending || splitInvalid} className="w-full">
