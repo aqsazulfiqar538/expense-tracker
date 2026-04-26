@@ -7,11 +7,9 @@ import { getProfile } from "@/lib/api/users"
 import { getToken, clearToken } from "@/lib/storage"
 import type { User } from "@/types/user"
 
-// What the rest of the app sees. Forms call `login` / `signup` / `logout`;
-// the rest read `user` and `isBootstrapping`.
 type AuthContextValue = {
   user: User | null
-  isBootstrapping: boolean
+  isCheckingAuth: boolean
   login: (email: string, password: string) => Promise<User>
   signup: (input: SignupInput) => Promise<User>
   logout: () => Promise<void>
@@ -27,40 +25,22 @@ type SignupInput = {
   date_of_birth: string
 }
 
-// why exported: `useAuth` needs it for `useContext(AuthContext)`. We don't
-// re-export through a barrel since this is the only consumer.
 export const AuthContext = createContext<AuthContextValue | null>(null)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
-  // why a separate "bootstrapping" flag instead of just `user === null`:
-  //   On first paint, before /users/profile resolves, `user` is null. That's
-  //   indistinguishable from "logged out", so RequireAuth would prematurely
-  //   redirect to /login. The boolean tells consumers "we're still finding
-  //   out — wait."
-  const [isBootstrapping, setIsBootstrapping] = useState(true)
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
-  // why this effect setStates directly:
-  //   "Bootstrap auth on mount" is one of the cases React docs explicitly
-  //   list as a legitimate useEffect use — loading data on the client that
-  //   wasn't available during render. The lint rule
-  //   `react-hooks/set-state-in-effect` is overzealous for this pattern; the
-  //   inline disable below is the audit trail.
   useEffect(() => {
     const token = getToken()
     if (!token) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsBootstrapping(false)
+      setIsCheckingAuth(false)
       return
     }
     getProfile()
       .then(setUser)
-      // why catch -> clearToken: if the token is stale or revoked, the
-      // profile call returns 401. The apiClient interceptor already handles
-      // routing for in-flow 401s; here we just make sure local state agrees
-      // (no token, no user) so the user can re-login cleanly.
       .catch(() => clearToken())
-      .finally(() => setIsBootstrapping(false))
+      .finally(() => setIsCheckingAuth(false))
   }, [])
 
   const login = useCallback(async (email: string, password: string): Promise<User> => {
@@ -81,7 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, isBootstrapping, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, isCheckingAuth, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   )

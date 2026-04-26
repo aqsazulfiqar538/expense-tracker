@@ -2,13 +2,6 @@ import { apiClient } from "@/lib/apiClient"
 import { clearToken } from "@/lib/storage"
 import type { User } from "@/types/user"
 
-// One function per endpoint. The axios interceptor in `apiClient` already
-// attaches the token, captures the new token from the response header, and
-// normalizes errors — so each function below stays a one-liner.
-
-// Devise wraps the user payload under a `user` key, both inbound and out.
-// We model that here so callers pass plain objects.
-
 type LoginInput = { email: string; password: string }
 type LoginResponse = { message: string; user: User }
 export const login = async (input: LoginInput): Promise<User> => {
@@ -32,10 +25,6 @@ export const signup = async (input: SignupInput): Promise<User> => {
 }
 
 export const logout = async (): Promise<void> => {
-  // why try/finally: the backend sometimes 401s if the token is already
-  // expired. Whether the request succeeds or not, the local token must be
-  // wiped — otherwise the interceptor keeps attaching a dead token and the
-  // user gets stuck.
   try {
     await apiClient.delete("/api/v1/logout")
   } finally {

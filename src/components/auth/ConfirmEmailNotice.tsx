@@ -9,13 +9,6 @@ import { ErrorBanner } from "@/components/ui/ErrorBanner"
 import { Spinner } from "@/components/ui/Spinner"
 import type { ApiError } from "@/types/api"
 
-// Two flows live here:
-//   A. User landed from the email link (URL has ?confirmation_token=...).
-//      We call the backend to confirm and show the outcome.
-//   B. User just signed up (URL has ?email=...). We show a "check your inbox"
-//      message and a Resend button.
-// Branching by query-param keeps both flows on one route (/confirm).
-
 export const ConfirmEmailNotice = () => {
   const searchParams = useSearchParams()
   const token = searchParams.get("confirmation_token")

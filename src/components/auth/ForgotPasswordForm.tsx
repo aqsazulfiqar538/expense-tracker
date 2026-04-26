@@ -29,10 +29,6 @@ export const ForgotPasswordForm = () => {
     }
   }
 
-  // why we keep the form mounted after success:
-  //   The user might typo the email. Replacing the form with a "check your
-  //   inbox" page would force a back-and-click to retry. Showing the success
-  //   message above the form lets them re-submit with a corrected email.
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && <ErrorBanner messages={error.messages} />}

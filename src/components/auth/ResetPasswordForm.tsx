@@ -11,9 +11,6 @@ import type { ApiError } from "@/types/api"
 export const ResetPasswordForm = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  // why read it inside the component, not as a page prop:
-  //   App Router pages receive `searchParams` as a prop, but only on Server
-  //   Components. This form is "use client" so it reads via the hook.
   const token = searchParams.get("reset_password_token") ?? ""
 
   const [password, setPassword] = useState("")
