@@ -86,16 +86,16 @@ Expenses:
 - [ ] Manual: edit + soft-delete own expense; edit/delete someone else's surfaces the 403
 
 ## Phase 4 — Friends
-- [ ] `src/lib/api/friends.ts`, `friendRequests.ts`, `users.ts` (extend with `searchUsers`)
-- [ ] `src/types/friend.ts`
-- [ ] `src/hooks/useDebounced.ts` (~15 lines)
-- [ ] `src/components/friend/UserSearch.tsx`
-- [ ] `src/components/friend/FriendList.tsx`
-- [ ] `src/components/friend/FriendRequestList.tsx`
-- [ ] `src/app/friends/page.tsx`, `src/app/friends/requests/page.tsx`
+- [x] `src/lib/api/friends.ts`, `friendRequests.ts`, `users.ts` (extend with `searchUsers`)
+- [x] `src/types/friend.ts` (and `PublicUser` extended with `full_name` + `initials`)
+- [x] `src/hooks/useDebounced.ts`
+- [x] `src/components/friend/UserSearch.tsx`
+- [x] `src/components/friend/FriendList.tsx`
+- [x] `src/components/friend/FriendRequestList.tsx`
+- [x] `src/app/friends/page.tsx`, `src/app/friends/requests/page.tsx`
 - [ ] Manual: search excludes self + existing friends
 - [ ] Manual: send / accept / reject / remove friend flows
-- [ ] Retro: `ParticipantPicker` (built in Phase 3) now wired with real friends list on `ExpenseForm`
+- [x] Retro: `ParticipantPicker` (built in Phase 3) now wired with real friends list on `ExpenseForm` (via `/expenses/new` page)
 
 ## Phase 5 — Groups
 - [ ] `src/lib/api/groups.ts`, `src/lib/api/members.ts`
