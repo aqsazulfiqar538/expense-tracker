@@ -1,15 +1,5 @@
 import type { UserSummary } from "@/types/user"
-
-export type LedgerEntry = UserSummary & {
-  amount: string
-}
-
-export type LedgerSummary = {
-  i_owe: LedgerEntry[]
-  owed_to_me: LedgerEntry[]
-  total_i_owe: string
-  total_owed_to_me: string
-}
+import type { LedgerSummary } from "@/types/ledger"
 
 export type DashboardRecentExpense = {
   id: string

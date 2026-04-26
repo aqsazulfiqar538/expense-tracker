@@ -115,16 +115,16 @@ Expenses:
 - [ ] Manual: from `/expenses/new`, create a new group inline (with split friends becoming members)
 
 ## Phase 6 — Ledger
-- [ ] `src/lib/api/ledger.ts`, `src/lib/api/repayments.ts`
-- [ ] `src/types/ledger.ts`, `src/types/repayment.ts`
-- [ ] `src/components/ledger/LedgerSummary.tsx`
-- [ ] `src/components/ledger/FriendLedger.tsx`
-- [ ] `src/components/ledger/RepaymentRow.tsx`
-- [ ] `src/app/ledger/page.tsx`, `src/app/ledger/[friendId]/page.tsx`
+- [x] `src/lib/api/ledger.ts`, `src/lib/api/repayments.ts`
+- [x] `src/types/ledger.ts`, `src/types/repayment.ts` (LedgerEntry/LedgerSummary moved here from types/dashboard.ts; dashboard imports them from here now)
+- [x] `src/components/ledger/LedgerSummary.tsx`
+- [x] `src/components/ledger/FriendLedger.tsx`
+- [x] `src/components/ledger/RepaymentRow.tsx`
+- [x] `src/app/ledger/page.tsx`, `src/app/ledger/[friendId]/page.tsx`
 - [ ] Manual: totals on `/ledger` match `/dashboard`
 - [ ] Manual: per-friend bilateral ledger correct in both directions
 - [ ] Manual: settle a repayment → settlement expense + system comment appear; row removed from unsettled list
-- [ ] Retro: `/` dashboard now reuses `LedgerSummary` instead of duplicating logic
+- [x] Retro: `/` dashboard now reuses `LedgerSummary` (renders the per-friend breakdown alongside the totals from StatsCards)
 
 ## Phase 7 — Notifications
 - [ ] `src/lib/api/notifications.ts`
