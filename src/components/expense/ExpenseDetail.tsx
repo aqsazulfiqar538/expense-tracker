@@ -52,6 +52,7 @@ export const ExpenseDetail = ({ expense, categories, friends, onChanged, onCateg
           mode={{ kind: "edit", expense }}
           categories={categories}
           friends={friends}
+          groups={[]}
           onUpdated={() => { setIsEditing(false); onChanged() }}
           onCategoryCreated={onCategoryCreated}
         />
