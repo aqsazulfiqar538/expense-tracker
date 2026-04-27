@@ -34,6 +34,12 @@ export const useApi = <T,>(fetcher: () => Promise<T>, deps: ReadonlyArray<unknow
     return () => { mounted.current = false }
   }, [])
 
+  // why we ignore the lint warning on the next useEffect:
+  //   The caller passes the dependency array explicitly via `deps`. Listing
+  //   `fetcher` here would force every consumer to memoize their fetcher
+  //   with useCallback — exactly the boilerplate this hook exists to remove.
+  //   The spread is also intentional: `deps` is opaque to us, the caller
+  //   chooses what triggers a refetch.
   useEffect(() => {
     setIsLoading(true)
     setError(null)
@@ -42,9 +48,6 @@ export const useApi = <T,>(fetcher: () => Promise<T>, deps: ReadonlyArray<unknow
       .catch((err: ApiError) => { if (mounted.current) setError(err) })
       .finally(() => { if (mounted.current) setIsLoading(false) })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // why disable: the caller passes the dependency array explicitly. Listing
-    // `fetcher` here would require every consumer to memoize the function,
-    // which is exactly the boilerplate this hook exists to remove.
   }, [tick, ...deps])
 
   const refetch = useCallback(() => setTick((t) => t + 1), [])
