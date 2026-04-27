@@ -50,7 +50,7 @@ export const GroupSelector = ({ groups, value, onChange }: Props) => {
             name="new_group_name"
             value={value.name}
             onChange={(e) => onChange({ ...value, name: e.target.value })}
-            placeholder="e.g. Goa trip, Apartment 3B"
+            placeholder="e.g. Lahore trip"
           />
           <GroupTypeSelect
             value={value.group_type}

@@ -59,12 +59,12 @@ export const ExpenseForm = ({ mode, categories, friends, groups, onUpdated, onCa
     if (groupChoice.kind !== "existing") return friends
     const group = groups.find((g) => Number(g.id) === groupChoice.group_id)
     if (!group) return friends
-    const memberIds = new Set(group.users.map((u) => u.id))
-    return friends.filter((f) => memberIds.has(f.id))
+    const memberIds = new Set(group.users.map((u) => u.id))//allusers in grp
+    return friends.filter((f) => memberIds.has(f.id)) //only those friends that are in grp
   }, [friends, groups, groupChoice])
 
   const splitParticipants: PickableFriend[] = me
-    ? [me, ...visibleFriends.filter((f) => selectedFriendIds.includes(f.id))]
+    ? [me, ...visibleFriends.filter((f) => selectedFriendIds.includes(f.id))]//me + selected friends
     : []
 
   const handleGroupChange = (choice: GroupChoice) => {
@@ -73,9 +73,9 @@ export const ExpenseForm = ({ mode, categories, friends, groups, onUpdated, onCa
       const group = groups.find((g) => Number(g.id) === choice.group_id)
       if (group) {
         const memberIds = new Set(group.users.map((u) => u.id))
-        setSelectedFriendIds((prev) => prev.filter((id) => memberIds.has(id)))
+        setSelectedFriendIds((prev) => prev.filter((id) => memberIds.has(id)))//remove friends not in this grp
         setCustomShares((prev) => prev.filter((row) =>
-          (me !== null && row.user_id === me.id) || memberIds.has(row.user_id),
+          (me !== null && row.user_id === me.id) || memberIds.has(row.user_id), //remove shares of users not in this grp, except myseld if I'm part of it
         ))
       }
     }

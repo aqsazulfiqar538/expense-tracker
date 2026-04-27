@@ -14,8 +14,6 @@ const navLinks: ReadonlyArray<{ href: string; label: string }> = [
 
 export const NavBar = () => {
   const { user } = useAuth()
-  // why hardcoded 0: Phase 7 wires this to a real notifications fetch.
-  // Stubbing at zero keeps the layout stable until then.
   const unreadCount = 0
 
   return (
