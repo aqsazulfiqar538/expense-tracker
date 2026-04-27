@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
+import { createPortal } from "react-dom"
 import type { ReactNode } from "react"
 
 type Props = {
@@ -25,8 +26,9 @@ export const Modal = ({ open, onClose, title, children }: Props) => {
   }, [open, onClose])
 
   if (!open) return null
+  if (typeof document === "undefined") return null
 
-  return (
+  return createPortal(
     <div
       onClick={onClose}
       className="fixed inset-0 z-20 bg-black/40 flex items-center justify-center p-4"
@@ -51,6 +53,7 @@ export const Modal = ({ open, onClose, title, children }: Props) => {
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

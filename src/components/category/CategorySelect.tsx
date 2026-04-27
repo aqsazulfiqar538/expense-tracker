@@ -9,11 +9,12 @@ type Props = {
   categories: Category[]
   value: string
   onChange: (categoryId: string) => void
+  onCategoryCreated?: () => void
 }
 
 const CREATE_SENTINEL = "__create_new__"
 
-export const CategorySelect = ({ categories, value, onChange }: Props) => {
+export const CategorySelect = ({ categories, value, onChange, onCategoryCreated }: Props) => {
   const [modalOpen, setModalOpen] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -27,6 +28,7 @@ export const CategorySelect = ({ categories, value, onChange }: Props) => {
   const handleCreated = (created: Category) => {
     onChange(created.id)
     setModalOpen(false)
+    onCategoryCreated?.()
   }
 
   return (
