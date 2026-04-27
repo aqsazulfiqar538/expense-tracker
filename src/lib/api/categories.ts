@@ -2,23 +2,16 @@ import { apiClient } from "@/lib/apiClient"
 import { unwrap } from "@/lib/jsonapi"
 import type { Category, CreateCategoryInput } from "@/types/category"
 
-type RawCategoryAttributes = {
-  name: string
-  active: boolean
-  parent_id: number | null
-  custom: boolean
-}
 type RawCategoryResource = {
   id: string
-  type: "category"
-  attributes: RawCategoryAttributes
+  attributes: Omit<Category, "id" | "subcategories">
   relationships?: {
     subcategories?: { data: { type: string; id: string }[] }
   }
 }
 type RawCategoriesResponse = {
-  data: RawCategoryResource[]
-  included?: RawCategoryResource[]
+  data: RawCategoryResource[] //parent here
+  included?: RawCategoryResource[] //child here
 }
 
 export const listCategories = async (): Promise<Category[]> => {
@@ -29,16 +22,16 @@ export const listCategories = async (): Promise<Category[]> => {
 const buildCategoryTree = (payload: RawCategoriesResponse): Category[] => {
   const subcategoryById = new Map<string, RawCategoryResource>()
   for (const item of payload.included ?? []) {
-    if (item.type === "category") subcategoryById.set(item.id, item)
+    subcategoryById.set(item.id, item)
   }
 
   return payload.data.map((parent) => {
-    const subRefs = parent.relationships?.subcategories?.data ?? []
+    const subRefs = parent.relationships?.subcategories?.data ?? [] //"data" is child ids in the parent
     const subcategories: Category[] = subRefs
-      .map((ref) => subcategoryById.get(ref.id))
-      .filter((c): c is RawCategoryResource => c !== undefined)
-      .map((c) => ({ id: c.id, ...c.attributes, subcategories: [] }))
-    return { id: parent.id, ...parent.attributes, subcategories }
+      .map((ref) => subcategoryById.get(ref.id))//For each child id reference, look up the full data in phone book
+      .filter((c): c is RawCategoryResource => c !== undefined)//remove any that wasn't found
+      .map((c) => ({ id: c.id, ...c.attributes, subcategories: [] }))//convert each child into a clean category object
+    return { id: parent.id, ...parent.attributes, subcategories }//return complete parent with child attached
   })
 }
 

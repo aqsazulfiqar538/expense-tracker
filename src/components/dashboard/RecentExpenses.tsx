@@ -32,7 +32,7 @@ export const RecentExpenses = ({ expenses }: Props) => {
                   <p className="font-medium text-gray-900">{e.title}</p>
                   <p className="text-xs text-gray-500">
                     {e.start_date}
-                    {e.category_name && <> · {e.category_name}</>}
+                    {e.category_name && <> - {e.category_name}</>}
                   </p>
                 </div>
                 <span className="font-semibold text-gray-900">{formatCurrency(e.amount)}</span>

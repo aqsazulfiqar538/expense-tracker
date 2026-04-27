@@ -9,11 +9,6 @@ import { Button } from "@/components/ui/Button"
 import { ErrorBanner } from "@/components/ui/ErrorBanner"
 import type { ApiError } from "@/types/api"
 
-// why one local state object vs six useStates:
-//   With six fields, six useState calls means six handler functions or one
-//   handler that writes by name. The name-keyed handler is shorter and
-//   matches the field names the backend expects, so the submit body is
-//   literally `form`.
 type FormState = {
   email: string
   password: string
@@ -46,9 +41,6 @@ export const SignupForm = () => {
     setError(null)
     try {
       await signup(form)
-      // why /confirm not /: backend Devise blocks unconfirmed users from
-      // every protected endpoint. Showing a "check your inbox" page is more
-      // honest than dropping them on a dashboard that 401s.
       router.push(`/confirm?email=${encodeURIComponent(form.email)}`)
     } catch (err) {
       setError(err as ApiError)

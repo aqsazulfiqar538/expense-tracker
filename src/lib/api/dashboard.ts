@@ -3,8 +3,8 @@ import type {
   Dashboard,
   DashboardRecentExpense,
   DashboardLedgerActivity,
-  LedgerSummary,
 } from "@/types/dashboard"
+import type { LedgerSummary } from "@/types/ledger"
 
 // Local types matching the raw wire format. Kept private here so components
 // only ever see the flat `Dashboard` type. See ARCHITECTURE.md §8.

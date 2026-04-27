@@ -32,7 +32,7 @@ export const ExpenseDetail = ({ expense, categories, friends, onChanged, onCateg
     : null
 
   const handleDelete = async () => {
-    if (!confirm("Delete this expense? It will be archived and removed from your lists.")) return
+    if (!confirm("Delete this expense? It will be removed from your lists.")) return
     setError(null)
     setIsDeleting(true)
     try {
