@@ -1,30 +1,28 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import axiosInstance from "@/lib/api/axiosInstance";
+import { useAuth } from "@/context/AuthContext";
 
 const LogoutButton = () => {
   const router = useRouter();
+  const { logout, loading } = useAuth();
 
   const handleLogout = async () => {
     try {
-      // Optional: call backend logout endpoint
-      await axiosInstance.delete("/api/v1/logout");
-    } catch (err) {
-      // Even if API fails, still log out locally
-      console.error("Logout error:", err);
-    } finally {
-      // Remove token from localStorage
-      localStorage.removeItem("token");
-
-      // Redirect to login page
+      await logout();
       router.push("/login");
+    } catch (err) {
+      console.error("Logout error:", err);
     }
   };
 
   return (
-    <button onClick={handleLogout}>
-      Logout
+    <button
+      onClick={handleLogout}
+      disabled={loading}
+      className="px-4 py-2 bg-red-500 text-white rounded"
+    >
+      {loading ? "Logging out." : "Logout"}
     </button>
   );
 };

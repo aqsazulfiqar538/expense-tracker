@@ -27,6 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(data.user)
     } catch (err: any) {
       setError(err.response?.data?.error || "Login failed")
+      throw(err)
     } finally {
       setLoading(false)
     }
@@ -41,6 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err: any) {
       const errors = err.response?.data?.errors?.join(", ") || "Signup failed"
       setError(errors)
+      throw(err)
     } finally {
       setLoading(false)
     }
